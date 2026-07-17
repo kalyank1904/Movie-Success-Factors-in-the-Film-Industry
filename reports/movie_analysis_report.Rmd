@@ -360,3 +360,57 @@ ggplot(genre_plot,
 ```
 
 The revenue and ratings may be considered the most important factors to estimate movie success, as the high ratings by audiences can gradually attract more audiences to visit the hall to watch a movie. Revenue, being strongly connected to audience count, also depends on ratings, as the more the ratings the more the crowd of audience indicating that ratings are the prime factor for movie success. Based on revenue, adventure is the genre generating highest revenue per year.
+
+### Influence of Language on Movie Success
+```{r language-revenue, fig.width=5, fig.height=3}
+language_success <- movies %>%
+  group_by(original_language) %>%
+  summarise(
+    avg_revenue = mean(revenue, na.rm = TRUE),
+    avg_rating = mean(vote_average, na.rm = TRUE),
+    movie_count = n()
+  ) %>%
+  arrange(desc(movie_count))
+
+language_plot <- language_success %>%
+  slice_head(n = 10)
+
+ggplot(language_plot,
+       aes(x = reorder(original_language,
+                       avg_revenue),
+           y = avg_revenue)) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title="Top Languages by Average Revenue",
+    x="Language",
+    y="Average Revenue"
+  )+
+  theme_minimal()
+```
+
+The analysis shows that the English language movies, despite generating high revenue and counts, possess limited ratings. On the other hand, the movies in other languages such as Hindi, Chinese and other languages, despite having a limited number of movies, have received high ratings. This indicates that the complete emphasis on the English language only by production companies may not be an appropriate decision to enhance movie success.
+
+### Connection between language and ratings
+```{r language-ratings, fig.width=5, fig.height=3}
+
+top_languages <- movies %>%
+  count(original_language, sort = TRUE) %>%
+  slice_head(n = 10) %>%
+  pull(original_language)
+
+movies %>%
+  filter(original_language %in% top_languages) %>%
+  ggplot(aes(x = reorder(original_language, vote_average, median),
+             y = vote_average)) +
+  geom_boxplot() +
+  coord_flip() +
+  labs(
+    title = "Distribution of Movie Ratings by Language",
+    x = "Language",
+    y = "Movie Rating"
+  ) +
+  theme_minimal()
+```
+ 
+The Italian and French languages has been found to be at the top, indicating that audiences prefer these languages more than other languages.In this regard, developing movies in these languages can help gain huge audience count enhancing the chances of movie success.
