@@ -11,7 +11,8 @@ cat("Number of rows after merging:", raw_row_count, "\n")
 cat("Number of columns:", raw_col_count, "\n")
 
 rm(list = year_object_names, envir = .GlobalEnv)
-rm(year_dfs, year_object_names)
+rm(year_object_names)
 
+ProjectTemplate::cache("movies_raw")
 ProjectTemplate::cache("raw_row_count")
 ProjectTemplate::cache("raw_col_count")
