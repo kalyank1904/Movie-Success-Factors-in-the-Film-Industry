@@ -61,3 +61,89 @@ The column names have been converted to the data types required for data analysi
 ```{r data-quality}
 missing_summary
 ```
+
+## Modeling
+### Global Trends
+The exploration of the basic summary of the prepared dataset shows that the 670072 movies between 2000 and 2024 are present in the dataset. The average rating, revenue, budget and run time are 2.050817, 894739.4, 351558.2 and 68.77461, respectively.
+
+```{r basic-summary}
+cat("\n===== BASIC SUMMARY =====\n")
+cat("Total movies:", nrow(movies), "\n")
+cat("Year range:", min(movies$release_year, na.rm = TRUE), "to", max(movies$release_year, na.rm = TRUE), "\n")
+cat("Average rating:", mean(movies$vote_average, na.rm = TRUE), "\n")
+cat("Average revenue:", mean(movies$revenue, na.rm = TRUE), "\n")
+cat("Average budget:", mean(movies$budget, na.rm = TRUE), "\n")
+cat("Average runtime:", mean(movies$runtime, na.rm = TRUE), "\n")
+```
+
+The top 10 movies in terms of revenue, release year, profit, budget and others have been explored in the form of tables first, and the exploratory plots have also been created to identify the patterns.
+
+```{r summary-tables}
+
+top_revenue_movies <- movies %>%
+  arrange(desc(revenue)) %>%
+  select(title, release_year, revenue, budget, profit, vote_average, popularity) %>%
+  slice(1:10)
+
+knitr::kable(
+top_revenue_movies,
+caption="Top 10 Revenue Generating Movies"
+)
+
+top_rated_movies <- movies %>%
+  filter(vote_count >= 100) %>%
+  arrange(desc(vote_average)) %>%
+  select(title, release_year, vote_average, vote_count, revenue, popularity) %>%
+  slice(1:10)
+
+knitr::kable(
+top_rated_movies,
+caption="Top 10 Highest Rated Movies"
+)
+
+movies_per_year <- movies %>%
+  count(release_year)
+
+knitr::kable(
+movies_per_year,
+caption="Count of Movies Per Year"
+)
+
+avg_revenue_per_year <- movies %>%
+  group_by(release_year) %>%
+  summarise(avg_revenue = mean(revenue, na.rm = TRUE),
+            total_movies = n()) %>%
+  ungroup()
+
+knitr::kable(
+avg_revenue_per_year,
+caption="Average Revenue Per Year"
+)
+
+genre_long <- movies %>%
+  select(id, title, genres) %>%
+  filter(!is.na(genres), genres != "") %>%
+  separate_rows(genres, sep = ",") %>%
+  mutate(genres = str_trim(genres)) %>%
+  filter(genres != "")
+
+genre_summary <- genre_long %>%
+  count(genres, sort = TRUE)
+```
+
+The first plot shows that the number of movies released per year has increased from the year 2000 onwards, with a slight decrease in 2020, which may be due to the pandemic situation. However, the movie count has been found to decrease significantly till 2024 despite recovering after 2020.
+
+```{r plot-movies-per-year, fig.width=5, fig.height=3}
+
+p1 <- ggplot(movies_per_year, aes(x = release_year, y = n)) +
+  geom_line(linewidth = 1) +
+  geom_point() +
+  labs(
+    title = "Number of Movies Released Per Year",
+    x = "Release Year",
+    y = "Number of Movies"
+  ) +
+  theme_minimal()
+
+print(p1)
+```
