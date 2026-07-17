@@ -309,3 +309,54 @@ Presence of missing values in different columns that are included in the analysi
 Which movie genre generates highest revenue and ratings?
 
 Does genre and language have any special influence on movie success?
+
+# Second CRISP-DM Cycle
+## Refined Business Understanding
+Based on the overall data analysis and findings received from the first CRISP-DM Cycle, it has been understood that most of the mentioned factors are interconnected to each other moderately. In this regard, the study intends to understand specifically, the connection between genre and revenue of movies in detail in the second CRISP-DM Cycle. This cycle also intends the way language influence the revenue of movies.
+
+Research Questions
+
+What is the best movie genre in the dataset based on the revenue and rating factors?
+
+How does the movie language influence the success of movies?
+
+## Enhanced Data Preparation
+The data has been prepared for this section by selecting only the required columns from the dataset, such as revenue, genres, title, vote average, and id. The rows containing missing values in the genre columns have been removed from the dataset. The separate rows have been created based on separate genres to analyse the impact of individual genres on movie success. The columns have been created called average rating, average revenue and movie count, calculating their values from the dataset. The numerical columns have been sorted in decreasing order to identify the best genre.
+
+## Advanced Modeling and Final Evaluation
+### Influence of Genre on Movie Success
+
+The exploration of the table comparing different genres in terms of revenue, ratings and others reveals that adventure is the best genre among the existing genres as it has contributed to the highest average revenue and average ratings. However, the highest movie count has been noticed in the drama genre, indicating that the emphasis on drama genre for movie development is one of the significant causes of deteriorating ratings and revenue from 2000 to 2024 in the film industry. Hence, the film producers need to emphasis creating adventure movies to gain high ratings, revenue and movie success.
+
+```{r genre-revenue, fig.width=5, fig.height=3}
+
+genre_revenue <- movies %>%
+  select(id, title, revenue, vote_average, genres) %>%
+  filter(!is.na(genres), genres != "") %>%
+  separate_rows(genres, sep = ",") %>%
+  mutate(genres = str_trim(genres)) %>%
+  group_by(genres) %>%
+  summarise(
+    avg_revenue = mean(revenue, na.rm = TRUE),
+    avg_rating = mean(vote_average, na.rm = TRUE),
+    movie_count = n()
+  ) %>%
+  arrange(desc(avg_revenue))
+
+genre_plot <- genre_revenue %>%
+  slice_head(n = 10)
+
+ggplot(genre_plot,
+       aes(x = reorder(genres, avg_revenue),
+           y = avg_revenue)) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "Top 10 Genres by Average Revenue",
+    x = "Genre",
+    y = "Average Revenue"
+  ) +
+  theme_minimal()
+```
+
+The revenue and ratings may be considered the most important factors to estimate movie success, as the high ratings by audiences can gradually attract more audiences to visit the hall to watch a movie. Revenue, being strongly connected to audience count, also depends on ratings, as the more the ratings the more the crowd of audience indicating that ratings are the prime factor for movie success. Based on revenue, adventure is the genre generating highest revenue per year.
