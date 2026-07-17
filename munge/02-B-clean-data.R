@@ -1,6 +1,9 @@
 movies <- movies_raw %>%
   janitor::clean_names()
 
+movies <- movies %>%
+  mutate(across(where(is.character), ~na_if(., "")))
+
 glimpse(movies)
 
 movies <- movies %>%

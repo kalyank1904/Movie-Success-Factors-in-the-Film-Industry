@@ -6,7 +6,7 @@ output:
 date: "`r format(Sys.Date())`"
 ---
 
-```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
 setwd("/Users/kalyankankanala/MovieAnalysis")
 library(ProjectTemplate)
 load.project()
@@ -43,3 +43,21 @@ How is the movie budget connected to the movie revenue in the film industry?
 What type of changes have the movies experienced over time in terms of release, revenue and rating patterns?
 
 Which movies have received the highest ratings and have generated the highest revenue?
+
+## Data Understanding
+The dataset consists of multiple CSV files with common columns such as id, title, genre, release date, budget, production country, production company, revenue and others. All the CSV files have been imported into the R platform and merged row-wise to form a single dataset containing data from all the files.
+
+```{r data-understanding}
+cat("Number of rows:", raw_row_count, "\n")
+cat("Number of columns:", raw_col_count, "\n")
+head(movies_raw)
+```
+
+The merged data consists of about `r format(raw_row_count, big.mark=",")` rows and `r raw_col_count` columns, indicating a huge dataset, making it effective to gain a clear understanding of the data pattern.
+
+## Data Preparation
+The column names have been converted to the data types required for data analysis. The duplicate columns have been removed to ensure the analysis generates accurate outcomes. The removal of the duplicate rows from the dataset has resulted in about 670072 rows in the cleaned dataset. Additional variables, such as profit, Return on Investment (ROI), and revenue success has been created. The rating groups have also been separated during data preparation to facilitate analysis, and only the movies from 2000 to 2024 have been filtered from the dataset. The row containing missing values has not been removed immediately, as that could decrease the entire dataset size significantly. The impossible run time and budget values have been removed from the dataset, making the dataset prepared for analysis.
+
+```{r data-quality}
+missing_summary
+```
