@@ -286,3 +286,26 @@ corrplot::corrplot(
   tl.cex = 0.8
 )
 ```
+
+## Evaluation - Cycle 1
+### Key Findings
+
+Increase in number of movies released per year.
+
+Decrease in average ratings of movies per year.
+
+Fluctuating average revenue per year with tendency to decrease consistently.
+
+Budget strongly connected to revenue.
+
+High ratings do not confirm high revenue.
+
+### Limitations
+Negligible connection between different factors and movie success has been identified.
+
+Presence of missing values in different columns that are included in the analysis process.
+
+### Questions for Cycle 2
+Which movie genre generates highest revenue and ratings?
+
+Does genre and language have any special influence on movie success?
