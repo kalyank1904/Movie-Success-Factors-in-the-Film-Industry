@@ -147,3 +147,53 @@ p1 <- ggplot(movies_per_year, aes(x = release_year, y = n)) +
 
 print(p1)
 ```
+
+The average rating has been found to consistently fall from 2000 onwards, indicating the gradual decrease in the quality of movies. This means the improvements in terms of developing stories and presentation of movies more relatable to audiences are required to achieve high ratings and movie success.
+
+```{r plot-rating-per-year, fig.width=5, fig.height=3}
+
+avg_rating_per_year <- movies %>%
+  group_by(release_year) %>%
+  summarise(
+    avg_rating = mean(vote_average, na.rm = TRUE),
+    n_movies = n()
+  ) %>%
+  ungroup()
+
+knitr::kable(
+avg_rating_per_year,
+caption="Average Ratings Per Year"
+)
+
+p2 <- ggplot(avg_rating_per_year, aes(x = release_year, y = avg_rating)) +
+  geom_line(linewidth = 1) +
+  geom_point() +
+  labs(
+    title = "Average Movie Rating Per Year",
+    x = "Release Year",
+    y = "Average Vote Average"
+  ) +
+  theme_minimal()
+
+print(p2)
+```
+
+The average revenue per year has been found to fluctuate throughout from 2000 to 2024, indicating fluctuating audience satisfaction. In this case also, a significant decrease in revenue has been noticed during 2020, which then recovered; however, the pattern clearly indicates a tendency to decrease in revenue every year.
+
+```{r plot-rating-group, fig.width=5, fig.height=3}
+rating_group_summary <- movies %>%
+count(rating_group)
+
+ggplot(rating_group_summary,
+       aes(x=rating_group,
+           y=n))+
+geom_col()+
+labs(
+title="Movies by Rating Group",
+x="Rating Group",
+y="Movie Count"
+)+
+theme_minimal()
+```
+
+The low rated movies are greater in number compared to the moderate and high rated movies.
