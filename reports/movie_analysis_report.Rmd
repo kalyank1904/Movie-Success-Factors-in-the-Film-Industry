@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 The film industry contributes a significant amount of revenue globally through cinema sales and streaming platforms. The success of a film depends on multiple factors, which makes it important to identify and analyse the key factors to ensure the continuous profitability of the industry as well as the enhancement of the global economy. In this regard, the current report is concerned with analysing a movie dataset containing data regarding different success factors of movies from 2000 to 2024. The report has utilised the CRISP-DM framework to profoundly analyse data by breaking the process into 2 CRISP-DM cycles. CRISP-DM methodology involves a multi-steped iterative framework for the profound analysis of complex scenarios (Bemthuis et al., 2025). The first cycle has focused on understanding the film industry in terms of exploring the patterns of success, ratings, revenue growth and many more related aspects. The secondary cycle has focused on the in-depth analysis of the influence of genre and language on movie success.
 
 ## Research Objectives
-First Cycle 
+First Cycle
 
 To determine the success pattern of movies from 2000 to 2024 by exploring different factors associated with it
 
@@ -28,7 +28,7 @@ To identify the movies associated with high revenue and high ratings, and to com
 
 Second Cycle
 
-To examine the way movie genre impacts the ratings and the commercial success of movies 
+To examine the way movie genre impacts the ratings and the commercial success of movies
 
 # First CRISP-DM Cycle
 ## Business Understanding
@@ -43,18 +43,3 @@ How is the movie budget connected to the movie revenue in the film industry?
 What type of changes have the movies experienced over time in terms of release, revenue and rating patterns?
 
 Which movies have received the highest ratings and have generated the highest revenue?
-
-
-
-
-
-## Data Understanding
-The dataset consists of multiple CSV files with common columns such as id, title, genre, release date, budget, production country, production company, revenue and others. All the CSV files have been imported into the R platform and merged row-wise to form a single dataset containing data from all the files.
-
-```{r data-understanding}
-cat("Number of rows:", nrow(movies), "\n")
-cat("Number of columns:", ncol(movies), "\n")
-head(movies)
-```
-
-The merged data consists of about `r format(nrow(movies), big.mark=",")` rows and `r ncol(movies)` columns, indicating a huge dataset, making it effective to gain a clear understanding of the data pattern.
