@@ -45,3 +45,16 @@ What type of changes have the movies experienced over time in terms of release, 
 Which movies have received the highest ratings and have generated the highest revenue?
 
 
+
+
+
+## Data Understanding
+The dataset consists of multiple CSV files with common columns such as id, title, genre, release date, budget, production country, production company, revenue and others. All the CSV files have been imported into the R platform and merged row-wise to form a single dataset containing data from all the files.
+
+```{r data-understanding}
+cat("Number of rows:", nrow(movies), "\n")
+cat("Number of columns:", ncol(movies), "\n")
+head(movies)
+```
+
+The merged data consists of about `r format(nrow(movies), big.mark=",")` rows and `r ncol(movies)` columns, indicating a huge dataset, making it effective to gain a clear understanding of the data pattern.
