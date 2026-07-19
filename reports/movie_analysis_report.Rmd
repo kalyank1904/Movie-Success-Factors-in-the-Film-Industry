@@ -170,3 +170,77 @@ Presence of missing values in different columns that are included in the analysi
 Which movie genre generates highest revenue and ratings?
 
 Does genre and language have any special influence on movie success?
+
+# Second CRISP-DM Cycle
+## Refined Business Understanding
+Based on the overall data analysis and findings received from the first CRISP-DM Cycle, it has been understood that most of the mentioned factors are interconnected to each other moderately. In this regard, the study intends to understand specifically, the connection between genre and revenue of movies in detail in the second CRISP-DM Cycle. This cycle also intends the way language influence the revenue of movies.
+
+Research Questions
+
+What is the best movie genre in the dataset based on the revenue and rating factors?
+
+How does the movie language influence the success of movies?
+
+## Enhanced Data Preparation
+The data has been prepared for this section by selecting only the required columns from the dataset, such as revenue, genres, title, vote average, and id. The rows containing missing values in the genre columns have been removed from the dataset. The separate rows have been created based on separate genres to analyse the impact of individual genres on movie success. The columns have been created called average rating, average revenue and movie count, calculating their values from the dataset. The numerical columns have been sorted in decreasing order to identify the best genre.
+
+## Advanced Modeling and Final Evaluation
+### Influence of Genre on Movie Success
+
+The exploration of the table comparing different genres in terms of revenue, ratings and others reveals that adventure is the best genre among the existing genres as it has contributed to the highest average revenue and average ratings. However, the highest movie count has been noticed in the drama genre, indicating that the emphasis on drama genre for movie development is one of the significant causes of deteriorating ratings and revenue from 2000 to 2024 in the film industry. Hence, the film producers need to emphasise creating adventure movies to gain high ratings, revenue and movie success.
+
+```{r plot-genre-revenue, out.width="70%"}
+knitr::include_graphics("../graphs/08_genre_revenue.png")
+```
+
+The revenue and ratings may be considered the most important factors to estimate movie success, as high ratings by audiences can gradually attract more audiences to visit the hall to watch a movie. Revenue, being strongly connected to audience count, also depends on ratings, as the more the ratings the more the crowd of audience, indicating that ratings are the prime factor for movie success. Based on revenue, adventure is the genre generating highest revenue per year.
+
+To go beyond revenue alone, the genres have also been ranked by average rating, and the overall spread of Return on Investment (ROI) across all movies has been examined, giving a fuller picture of genre performance and production efficiency.
+
+```{r plot-genre-rating, out.width="70%"}
+knitr::include_graphics("../graphs/11_genre_rating.png")
+```
+
+The distribution of Return on Investment shows that most movies cluster at low-to-moderate ROI, with a long tail of high-ROI outliers, indicating that a small number of movies generate disproportionately large returns relative to their budget.
+
+```{r plot-roi-distribution, out.width="70%"}
+knitr::include_graphics("../graphs/12_roi_distribution.png")
+```
+
+### Influence of Language on Movie Success
+```{r plot-language-revenue, out.width="70%"}
+knitr::include_graphics("../graphs/09_language_revenue.png")
+```
+
+The analysis shows that the English language movies, despite generating high revenue and counts, possess limited ratings. On the other hand, the movies in other languages such as Hindi, Chinese and other languages, despite having a limited number of movies, have received high ratings. This indicates that the complete emphasis on the English language only by production companies may not be an appropriate decision to enhance movie success.
+
+### Connection between language and ratings
+```{r plot-language-ratings, out.width="70%"}
+knitr::include_graphics("../graphs/10_language_ratings.png")
+```
+
+The Italian and French languages has been found to be at the top, indicating that audiences prefer these languages more than other languages.In this regard, developing movies in these languages can help gain huge audience count enhancing the chances of movie success.
+
+## Evaluation - Cycle 2
+### Key Findings
+
+Adventure is the genre most strongly associated with both high average revenue and high average ratings.
+
+Drama has the highest movie count but does not lead on revenue or rating, suggesting oversupply relative to audience reward.
+
+English and Chinese language movies generate the highest revenue, but Italian and French language movies achieve the highest average ratings.
+
+Revenue and ratings are not strongly linked - the highest-revenue movies are rarely the highest-rated ones.
+
+### Link to Success Criteria
+These findings directly satisfy the success criteria set out in the Business Understanding: a clear pattern has been identified (Adventure genre and non-English languages both associate with stronger audience reception), and the revenue-rating relationship has been clarified as largely independent rather than reliably predictive. This gives the stakeholder a concrete basis for content decisions: prioritising Adventure titles for revenue, while considering multilingual content investment to strengthen ratings.
+
+### Limitations
+Genre and language are both self-reported, categorical fields in the source data and may not capture nuanced audience segments.
+
+The analysis does not control for confounding factors such as marketing spend or release timing, which likely also influence genre and language performance.
+
+### Next Steps
+Future work could model revenue and rating jointly (e.g. multivariate regression) to isolate the independent effect of genre and language while controlling for budget and release year.
+
+A dedicated success label (rather than deriving it from revenue/rating thresholds) would allow more precise classification-based analysis in a future CRISP-DM cycle.
