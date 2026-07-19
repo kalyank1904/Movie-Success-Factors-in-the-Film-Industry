@@ -1,0 +1,7 @@
+cat("\n===== BASIC SUMMARY =====\n")
+cat("Total movies:", nrow(movies), "\n")
+cat("Year range:", min(movies$release_year, na.rm = TRUE), "to", max(movies$release_year, na.rm = TRUE), "\n")
+cat("Average rating:", mean(movies$vote_average, na.rm = TRUE), "\n")
+cat("Average revenue:", mean(movies$revenue, na.rm = TRUE), "\n")
+cat("Average budget:", mean(movies$budget, na.rm = TRUE), "\n")
+cat("Average runtime:", mean(movies$runtime, na.rm = TRUE), "\n")
