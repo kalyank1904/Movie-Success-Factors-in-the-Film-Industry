@@ -5,6 +5,7 @@
 
 library(ggplot2)
 library(dplyr)
+
 # ----- Function 1: Top N Table -----
 
 get_top_n <- function(data, sort_column, n = 10) {
@@ -43,6 +44,11 @@ plot_ranked_bar <- function(data, x_var, y_var, title, x_label, y_label) {
   return(p)
 }
 
-cat("Analysis functions loaded!\n")
+# ----- Function 5: Print and Save a Plot -----
+
+show_and_save_plot <- function(plot_obj, filename, width = 7, height = 5) {
+  print(plot_obj)
+  ggsave(paste0("graphs/", filename), plot_obj, width = width, height = height)
+}
 
 setwd("/Users/kalyankankanala/MovieAnalysis")
