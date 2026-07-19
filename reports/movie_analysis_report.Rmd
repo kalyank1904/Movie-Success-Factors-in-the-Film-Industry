@@ -244,3 +244,52 @@ The analysis does not control for confounding factors such as marketing spend or
 Future work could model revenue and rating jointly (e.g. multivariate regression) to isolate the independent effect of genre and language while controlling for budget and release year.
 
 A dedicated success label (rather than deriving it from revenue/rating thresholds) would allow more precise classification-based analysis in a future CRISP-DM cycle.
+
+# Final Evaluation
+## Major Findings
+
+English and Chinese language movies have mostly generated high revenue.
+
+Adventure genre movies has been found to generate significantly high revenue.
+
+Italian and French language are top-rated languages among others.
+
+Revenue and ratings are not directly connected to each other as the highest revenue movie and top-rated movies are different.
+
+# Implications for Film Production Industry
+Focus on generating movies on multiple languages can help film producers equally gain high ratings and revenue.
+
+The adventure genre has been found to generate highest revenue indicating the film production industry can focus on this genre to enhance profitability.
+
+Developing movies in Italian and French languages can enhances audience count, enhancing revenue.
+
+The emphasis on multiple languages can help create movies in native languages of different people enhancing their understandability resulting in increased audience.
+
+High ratings does not ensure high revenue, indicating that a high quality movie content is a priority along with top-rated language to ensure a successful movie.
+
+# Study Limitations
+The dataset consists of huge missing values in some of the columns which has been challenging to handle as the removal of those rows might have reduced the data size, imposing negative impact to the data analysis.
+
+The findings of the study has been extracted from a single dataset.
+
+The dataset lacks a separate column specifically designed to label movies as successful and failure.
+
+# Conclusions
+Based on the overall analysis in the CRISP-DM Cycles, it can be inferred that the emphasis on creating more movies in the adventure genre is necessary for enhanced profitability and revenue increase in the film industry. The ratings are the most important factor influencing the success of a movie by spreading positive vibes and attracting new audiences to watch the movie. The development of movies with top-rated languages such as Italian, French and others can influence movies success. The film industry can rely on this information to enhance its growth and revenue in future.
+
+# Methodological Notes
+
+The CRISP-DM methodological approach has been executed with two iterative cycles.
+
+First cycle have focused on exploring global trends.
+
+The second cycle have focused on specific details regarding the connection of movie success with genre and language and ratings.
+
+R programming language have been used to execute the entire coding part.
+
+Histogram, bar plots and others have been used to analyse the dataset.
+
+# References
+Bemthuis, R. H., Govers, R. R., & Asadi, A. (2025). A CRISP-DM-based methodology for assessing agent-based simulation models using process mining [Review of A CRISP-DM-based methodology for assessing agent-based simulation models using process mining]. Journal of Simulation, 1-22. https://doi.org/10.1080/17477778.2025.2508245
+
+Singh, P., & Asthana, S. (2025). Financial Sustainability in the Film Industry: Challenges, Strategies, and Future Directions. International Journal on Science and Technology (IJSAT) IJSAT25033691, 16(3). https://www.ijsat.org/papers/2025/3/3691.pdf
