@@ -3,6 +3,7 @@ title: "Movie Success Factors in the Film Industry (2000-2024): A CRISP-DM Analy
 output:
   pdf_document: default
   word_document: default
+author: "Kalyan Kankanala, Student ID: 250551284"
 date: "`r format(Sys.Date())`"
 ---
 
