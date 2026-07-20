@@ -92,7 +92,6 @@ p_roi_distribution <- movies %>%
   theme_minimal()
 
 # plots
-
 print(p_genre_revenue)
 print(p_language_revenue)
 print(p_language_ratings)
