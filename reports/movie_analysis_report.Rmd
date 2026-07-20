@@ -1,5 +1,5 @@
 ---
-title: "Movie Data"
+title: "Movie Success Factors in the Film Industry (2000-2024): A CRISP-DM Analysis of Budget, Revenue, Genre, and Language"
 output:
   pdf_document: default
   word_document: default
