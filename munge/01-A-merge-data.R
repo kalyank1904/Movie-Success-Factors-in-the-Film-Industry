@@ -1,3 +1,5 @@
+# Merge data
+
 year_object_names <- ls(envir = .GlobalEnv, pattern = "^movies_20[0-9]{2}$")
 
 year_dfs <- mget(year_object_names, envir = .GlobalEnv)
@@ -11,7 +13,7 @@ cat("Number of rows after merging:", raw_row_count, "\n")
 cat("Number of columns:", raw_col_count, "\n")
 
 rm(list = year_object_names, envir = .GlobalEnv)
-rm(year_object_names)
+rm(year_dfs, year_object_names)
 
 ProjectTemplate::cache("movies_raw")
 ProjectTemplate::cache("raw_row_count")
