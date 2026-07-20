@@ -1,12 +1,11 @@
-# Clean 
+# ============================================
+# MUNGE 02-B: CLEAN DATA
+# ============================================
 movies <- movies_raw %>%
   janitor::clean_names()
-
 movies <- movies %>%
   mutate(across(where(is.character), ~na_if(., "")))
-
 glimpse(movies)
-
 movies <- movies %>%
   mutate(
     id                    = as.character(id),
@@ -30,8 +29,6 @@ movies <- movies %>%
     spoken_languages      = as.character(spoken_languages),
     keywords              = as.character(keywords)
   )
-
 movies <- movies %>%
   distinct(id, .keep_all = TRUE)
-
 cat("Rows after removing duplicates:", nrow(movies), "\n")

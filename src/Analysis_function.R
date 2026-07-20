@@ -3,8 +3,6 @@
 # File: src/analysis_functions.R
 # ============================================
 
-library(ggplot2)
-library(dplyr)
 
 # ----- Function 1: Top N Table -----
 
@@ -51,4 +49,3 @@ show_and_save_plot <- function(plot_obj, filename, width = 7, height = 5) {
   ggsave(paste0("graphs/", filename), plot_obj, width = width, height = height)
 }
 
-setwd("/Users/kalyankankanala/MovieAnalysis")

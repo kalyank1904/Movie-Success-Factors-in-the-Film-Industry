@@ -1,3 +1,6 @@
+# ============================================
+# SUMMARY ANALYSIS
+# ============================================
 key_findings <- list(
   cycle1 = list(
     movie_count_change = paste0(
@@ -34,17 +37,11 @@ key_findings <- list(
       pull(original_language)
   )
 )
-
 saveRDS(key_findings, file = "cache/key_findings.rds")
-
 cat("Summary data created and saved to cache/key_findings.rds\n")
-
-
-
 write.csv(top_revenue_movies, "outputs/top_revenue_movies.csv", row.names = FALSE)
 write.csv(top_rated_movies, "outputs/top_rated_movies.csv", row.names = FALSE)
 write.csv(genre_revenue, "outputs/genre_revenue.csv", row.names = FALSE)
 write.csv(language_success, "outputs/language_success.csv", row.names = FALSE)
 save(key_findings, file = "outputs/key_findings.RData")
-
 cat("Exported outputs.\n")

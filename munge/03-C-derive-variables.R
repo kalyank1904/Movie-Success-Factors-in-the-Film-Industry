@@ -1,11 +1,12 @@
-# varibales 
+# ============================================
+# MUNGE 03-C: DERIVE VARIABLES
+# ============================================
 movies <- movies %>%
   mutate(
     budget  = ifelse(budget < 0, NA, budget),
     revenue = ifelse(revenue < 0, NA, revenue),
     runtime = ifelse(runtime <= 0, NA, runtime)
   )
-
 movies <- movies %>%
   mutate(
     release_year  = year(release_date),
@@ -27,24 +28,10 @@ movies <- movies %>%
       TRUE                  ~ "Highly Rated"
     )
   )
-
-
 missing_summary <- sapply(movies, function(x) sum(is.na(x)))
 missing_summary <- sort(missing_summary, decreasing = TRUE)
 print(missing_summary)
-
 movies <- movies %>%
   filter(release_year >= 2000 & release_year <= 2024)
-
 ProjectTemplate::cache("movies")
 ProjectTemplate::cache("missing_summary")
-
-
-
-
-
-
-
-
-
-

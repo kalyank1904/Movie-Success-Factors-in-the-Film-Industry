@@ -7,7 +7,7 @@ date: "`r format(Sys.Date())`"
 ---
 
 ```{r setup, include=FALSE}
-setwd("/Users/kalyankankanala/MovieAnalysis")
+setwd("..")
 library(ProjectTemplate)
 load.project()
 source("src/Analysis_function.R")
@@ -55,7 +55,7 @@ What type of changes have the movies experienced over time in terms of release, 
 Which movies have received the highest ratings and have generated the highest revenue?
 
 ## Data Understanding
-The dataset consists of multiple CSV files with common columns such as id, title, genre, release date, budget, production country, production company, revenue and others. All the CSV files have been imported into the R platform and merged row-wise to form a single dataset containing data from all the files.
+The dataset consists of multiple CSV files with common columns such as id, title, genre, release date, budget, production country, production company, revenue and others. All the CSV files have been imported into the R platform and merged row-wise to form a single dataset containing data from all the files. These variables were retained because they map directly onto the stakeholder's core questions: budget, revenue and profit speak to commercial performance; vote_average and vote_count speak to critical and audience reception; and release_date, genres and original_language allow success to be tracked over time and broken down by content type, which is exactly the kind of pattern a content-acquisition team needs when deciding what to license or commission.
 
 ```{r data-understanding}
 cat("Number of rows:", raw_row_count, "\n")
@@ -160,6 +160,10 @@ Fluctuating average revenue per year with tendency to decrease consistently.
 Budget strongly connected to revenue.
 
 High ratings do not confirm high revenue.
+
+### Link to Success Criteria
+
+These findings speak directly to the success criteria set out in the Business Understanding: a clear pattern has been identified linking budget to revenue, while the connection between ratings and revenue is shown to be negligible - meaning ratings and revenue should be treated as largely independent signals of success rather than one predicting the other. This gives the stakeholder an early, data-grounded basis for acquisition decisions, while highlighting that further investigation (carried out in Cycle 2) is needed before more specific, actionable guidance can be given.
 
 ### Limitations
 Negligible connection between different factors and movie success has been identified.
@@ -287,7 +291,7 @@ The second cycle have focused on specific details regarding the connection of mo
 
 R programming language have been used to execute the entire coding part.
 
-Histogram, bar plots and others have been used to analyse the dataset.
+Histogram, bar plots and others have been used to analyse the dataset. All exploratory and modelling visualisations in this report were produced using ggplot2, with a single exception: the correlation matrix visualisation uses the corrplot package, as it produces a purpose-built, directly interpretable colour-coded correlation grid that ggplot2 does not offer natively without substantial additional code.
 
 # References
 Bemthuis, R. H., Govers, R. R., & Asadi, A. (2025). A CRISP-DM-based methodology for assessing agent-based simulation models using process mining [Review of A CRISP-DM-based methodology for assessing agent-based simulation models using process mining]. Journal of Simulation, 1-22. https://doi.org/10.1080/17477778.2025.2508245
