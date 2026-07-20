@@ -141,10 +141,10 @@ The run time of most of the movies has been found to be very less, indicating th
 knitr::include_graphics("../graphs/07_top_genres.png")
 ```
 
-The matrix shows that revenue and profit share a significant positive connection, indicating that an increase in revenue results in increased profit, which is natural. Similarly, the vote count has been found to strong positively related to the revenue, budget and profit, indicating that high budget movies are often highly rated by audiences, leading to increased revenue. The popularity has been found to be slightly connected to the vote count and revenue of movies, which means the popular movies often generate more revenue as a huge audience visits to experience the movie. However, the connection is negligible, indicating that high ratings do not ensure high revenue.
+The matrix shows that revenue and profit share a significant positive connection, indicating that an increase in revenue results in increased profit, which is natural. Similarly, vote count has been found to be strongly positively related to revenue, budget and profit, indicating that more widely-watched movies tend to generate more revenue and profit; however, vote count reflects audience volume rather than audience approval, and vote_average (the actual rating) shows only a weak correlation with these factors. The popularity has been found to be slightly connected to the vote count and revenue of movies, which means the popular movies often generate more revenue as a huge audience visits to experience the movie. However, the connection is negligible, indicating that high ratings do not ensure high revenue.
 
 ```{r correlation, fig.width=5, fig.height=3}
-knitr::kable(cor_matrix, caption = "Correletion Matrix")
+knitr::kable(cor_matrix, caption = "Correlation Matrix")
 corrplot::corrplot(cor_matrix, method = "color", type = "upper", tl.cex = 0.8)
 ```
 
@@ -212,7 +212,7 @@ knitr::include_graphics("../graphs/12_roi_distribution.png")
 knitr::include_graphics("../graphs/09_language_revenue.png")
 ```
 
-The analysis shows that the English language movies, despite generating high revenue and counts, possess limited ratings. On the other hand, the movies in other languages such as Hindi, Chinese and other languages, despite having a limited number of movies, have received high ratings. This indicates that the complete emphasis on the English language only by production companies may not be an appropriate decision to enhance movie success.
+The analysis shows that the English language movies, despite generating high revenue and counts, possess limited ratings. On the other hand, the movies in other languages such as Chinese and other languages, despite having lower movie counts than English, have received competitive ratings. This indicates that the complete emphasis on the English language only by production companies may not be an appropriate decision to enhance movie success. It should be noted that this comparison is restricted to the 10 most common languages by movie count, so as to avoid unstable averages from languages with very few titles.
 
 ### Connection between language and ratings
 ```{r plot-language-ratings, out.width="70%"}
@@ -272,7 +272,7 @@ The dataset consists of huge missing values in some of the columns which has bee
 
 The findings of the study has been extracted from a single dataset.
 
-The dataset lacks a separate column specifically designed to label movies as successful and failure.
+The dataset lacks a separate column specifically designed to label movies as successful and failure. A small number of entries in the raw data (e.g. movies with several billion in reported revenue against a budget of only a few hundred dollars and zero votes) also appear to be data quality issues rather than genuine box-office performance, and should be interpreted with caution where they influence top-revenue rankings.
 
 # Conclusions
 Based on the overall analysis in the CRISP-DM Cycles, it can be inferred that the emphasis on creating more movies in the adventure genre is necessary for enhanced profitability and revenue increase in the film industry. The ratings are the most important factor influencing the success of a movie by spreading positive vibes and attracting new audiences to watch the movie. The development of movies with top-rated languages such as Italian, French and others can influence movies success. The film industry can rely on this information to enhance its growth and revenue in future.

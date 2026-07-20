@@ -92,7 +92,15 @@ p_roi_distribution <- movies %>%
   theme_minimal()
 
 # plots
-show_and_save_plot(p_genre_revenue, "genre_revenue.png")
-show_and_save_plot(p_language_revenue, "language_revenue.png")
-show_and_save_plot(p_language_ratings, "language_ratings.png")
-show_and_save_plot(p_genre_rating, "genre_rating.png")
+
+print(p_genre_revenue)
+print(p_language_revenue)
+print(p_language_ratings)
+print(p_genre_rating)
+print(p_roi_distribution)
+
+ggsave("graphs/08_genre_revenue.png", p_genre_revenue, width = 7, height = 5)
+ggsave("graphs/09_language_revenue.png", p_language_revenue, width = 7, height = 5)
+ggsave("graphs/10_language_ratings.png", p_language_ratings, width = 7, height = 5)
+ggsave("graphs/11_genre_rating.png", p_genre_rating, width = 7, height = 5)
+ggsave("graphs/12_roi_distribution.png", p_roi_distribution, width = 7, height = 5)
