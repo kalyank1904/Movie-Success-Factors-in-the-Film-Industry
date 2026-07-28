@@ -152,30 +152,23 @@ corrplot::corrplot(cor_matrix, method = "color", type = "upper", tl.cex = 0.8)
 
 ## Evaluation - Cycle 1
 ### Key Findings
-
-- Number of movies released per year increasing.
-
-- Average rating of movies per year decreasing.
-
-- Average revenue fluctuating per year but tending to decrease steadily.
-
-- Budget has a strong relationship with revenue.
-
-- High ratings do not imply high revenue.
+- Number of movie releases increased from 9,066 in 2000 to a maximum of 47,190 in 2023 and then to 35,618 in 2024.
+- Average rating declined from 2.47 in 2000 to 0.50 in 2024; however, this trend may be due to an increasing number   of lower-quality movies that received lower ratings.
+- Annual average income varies throughout the period but demonstrates a negative trend, with a significant decline    after 2019 and partial recovery afterwards.
+- Budget and income are highly correlated (0.72), meaning that the movies with higher budget are also generating      higher incomes.
+- The vote count is highly correlated with income and budget while vote_average is poorly correlated with both of     these factors – high rating does not mean high income.
 
 ### Link to Success Criteria
 
-These findings speak directly to the success criteria set out in the Business Understanding: a clear pattern has been identified linking budget to revenue, while the connection between ratings and revenue is shown to be negligible - meaning ratings and revenue should be treated as largely independent signals of success rather than one predicting the other. This gives the stakeholder an early, data-grounded basis for acquisition decisions, while highlighting that further investigation (carried out in Cycle 2) is needed before more specific, actionable guidance can be given.
+These findings bear immediate relevance to the success criteria established in the Business Understanding. It was discovered that there is a stable and clear pattern between budget and revenue (correlation of 0.72), thus meeting the first success criterion. It was also made evident what the relationship between rating and revenue is – the lack of any significant correlation, meaning that they can be considered separate indicators of success, thus satisfying the second success criterion. However, in order to give some specific recommendations regarding acquisitions, further analysis should be conducted (Cycle 2).
 
 ### Limitations
-Negligible connection between different factors and movie success has been identified.
-
-Presence of missing values in different columns that are included in the analysis process.
+- There is low correlation among the vast majority of individual factors (except for budget and revenue) and the      success of the movies, meaning that there are fewer conclusions that can be made on the basis of Cycle 1.
+- There is an abundance of missing data for several columns (for example, homepage, tagline, keywords, production     company details); however, the columns with the core variables utilized in this cycle have virtually zero missing   data.
 
 ### Questions for Cycle 2
-Which movie genre generates highest revenue and ratings?
-
-Does genre and language have any special influence on movie success?
+- Which genre of movies makes the most money and has high ratings?
+- Is there any specific effect of genre and language on movies’ success, apart from the budget itself?
 
 # Second CRISP-DM Cycle
 ## Refined Business Understanding
