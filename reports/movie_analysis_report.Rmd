@@ -286,11 +286,11 @@ Based on the overall analysis in the CRISP-DM Cycles, it can be inferred that th
 
 The CRISP-DM methodological approach has been executed with two iterative cycles.
 
-First cycle have focused on exploring global trends.
+The first cycle has focused on exploring global trends.
 
-The second cycle have focused on specific details regarding the connection of movie success with genre and language and ratings.
+The second cycle has focused on specific details regarding the connection of movie success with genre, language, and ratings.
 
-R programming language have been used to execute the entire coding part.
+The R programming language has been used to execute the entire coding part.
 
 Histogram, bar plots and others have been used to analyse the dataset. All exploratory and modelling visualisations in this report were produced using ggplot2, with a single exception: the correlation matrix visualisation uses the corrplot package, as it produces a purpose-built, directly interpretable colour-coded correlation grid that ggplot2 does not offer natively without substantial additional code.
 
