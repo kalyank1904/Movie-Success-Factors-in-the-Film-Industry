@@ -20,62 +20,61 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 
 # Introduction
 ## Context
-The film industry contributes a significant amount of revenue globally through cinema sales and streaming platforms. The success of a film depends on multiple factors, which makes it important to identify and analyse the key factors to ensure the continuous profitability of the industry as well as the enhancement of the global economy. In this regard, the current report is concerned with analysing a movie dataset containing data regarding different success factors of movies from 2000 to 2024. The report has utilised the CRISP-DM framework to profoundly analyse data by breaking the process into 2 CRISP-DM cycles. CRISP-DM methodology involves a multi-steped iterative framework for the profound analysis of complex scenarios (Bemthuis et al., 2025). The first cycle has focused on understanding the film industry in terms of exploring the patterns of success, ratings, revenue growth and many more related aspects. The secondary cycle has focused on the in-depth analysis of the influence of genre and language on movie success.
+The global flim industry generates substantial revenue through cinema releases and streaming platforms, and understanding what drivers a film's success have real commercial value for studios, streaming platforms, and investors alike. This report analyses a dataset of movies released between 2000 and 2024, sourced from the Movie Database(TMBDb),to explore the factors associated with commercial and critical success. The analysis follows the CRISP-DM (Cross-Industry Standard Process for Data Mining) methodology, structured across two iterative cycles (Bemthuis et al., 2025). The first cycle examines broad, gloabl trends across the full dataset - release volume, ratings, revenue, and budget over time. The second cycle builds on these findings with a more focused investigation into how genre and language relate to film's commercial and critical performance.
 
 ## Research Objectives
 First Cycle
 
-To determine the success pattern of movies from 2000 to 2024 by exploring different factors associated with it
-
-To comprehend the connection between a movie's budget and its revenue contribution
-
-To identify the movies associated with high revenue and high ratings, and to comprehend the features most significant for movie success
+- To identify overall patterns in movie release volume, ratings, and revenue between 2000 and 2024.
+- To examine the relationship between a movie's budget and the revenue it generates
+- To identify which movies achieved the highest revenue and the highest ratings, and to understand which features     are most associated with movie success
 
 Second Cycle
 
-To examine the way movie genre impacts the ratings and the commercial success of movies
+- To examine how a movie's genre relates to its ratings and commercial success
+- To examine how a movie's orginal language relates to its ratings and commercial success
+
 
 # First CRISP-DM Cycle
 ## Business Understanding
-The continuously increasing production cost and budgetary constraints have made it difficult to maintain financial sustainability in the film industry (Singh & Asthana, 2025). In this regard, it has become necessary to explore the connection between budget and film success. This cycle involves understanding the business-related aspects of film production companies, emphasising the identification of the key success factors required to be focused on by film producers to ensure movie success. In order to gain this business understanding, the study has divided the main business question into sub-questions defined below.
+Rising production costs and tighter budgest have made financial sustainability an ongoing challenge for the film industry.Understanding how budget relates to a film's eventual success is therefore a key business question. Thos cycle focuses on that business context from the perspective of a specific stakeholder, breaking the overall question down into the sub-questions addressed below.
+
 
 ### Stakeholder
-This analysis is framed for a **streaming platform content-acquisition team**, responsible for deciding which types of films to license, promote, or commission. This stakeholder needs to understand which factors reliably predict commercial success (revenue) and critical/audience reception (rating), so that acquisition and production-partnership decisions can be prioritised accordingly.
+This analysis is framed for a **streaming platform content-acquisition team**, responsible for deciding which types of films to license, promote, or commission This stakeholder needs to understand which factors reliably predict commercial success (revenue) and critical/audience reception (rating), so that acquisition and production-partnership decisions can be prioritized accordingly. 
 
 ### Success Criteria
-The analysis will be considered successful if it identifies: (1) clear, consistent patterns in how budget, genre, and release timing relate to revenue and ratings; (2) whether high ratings reliably predict high revenue, or whether these are largely independent; and (3) actionable guidance, grounded in the data, that the stakeholder could use to prioritise future content decisions.
+This analysis would be deemed a success if the following three factors were achieved: (1) identification of consistent patterns in the relationship between budget, genre, release timing, and both rating and revenue; (2) determining whether high ratings consistently correlate with high revenue or whether the two are relatively independent of each other; and (3) practical advice based on the data analysis for the stakeholder.
 
-Research Questions
+## Research Questions
 
-What are the key patterns of the success factors of movies in the dataset used?
-
-How is the movie budget connected to the movie revenue in the film industry?
-
-What type of changes have the movies experienced over time in terms of release, revenue and rating patterns?
-
-Which movies have received the highest ratings and have generated the highest revenue?
+- What are the key patterns of the success factors of movies in the dataset used?
+- How is the movie budget connected to the movie revenue in the film industry?
+- What type of changes have the movies experienced over time in terms of release, revenue and rating patterns?
+- Which movies have received the highest ratings and have generated the highest revenue?
 
 ## Data Understanding
-The dataset consists of multiple CSV files with common columns such as id, title, genre, release date, budget, production country, production company, revenue and others. All the CSV files have been imported into the R platform and merged row-wise to form a single dataset containing data from all the files. These variables were retained because they map directly onto the stakeholder's core questions: budget, revenue and profit speak to commercial performance; vote_average and vote_count speak to critical and audience reception; and release_date, genres and original_language allow success to be tracked over time and broken down by content type, which is exactly the kind of pattern a content-acquisition team needs when deciding what to license or commission.
+The dataset comprises 25 years of CSV files, one for each year from 2000 to 2024, having common columns like id, title, genres, release date, budget, revenue, vote average, vote count, and original language. These 25 years of datasets have been merged together in one single file for analysis. The reason for selecting these specific features is that they reflect answers to the stakeholder’s main concerns: budget, revenue, and profit relate to the commercial success, while vote average and vote count refer to critical and audience reception, respectively. Release date, genres, and original language help in analyzing success with the passage of time and according to the content type.
 
 ```{r data-understanding}
 cat("Number of rows:", raw_row_count, "\n")
 cat("Number of columns:", raw_col_count, "\n")
-head(movies_raw)
+knitr::kable(head(movies_raw[, c("id", "title", "vote_average", "vote_count", "release_date", "revenue", "budget", "runtime", "original_language")]), caption = "Sample of Raw Merged Data")
 ```
 
-The merged data consists of about `r format(raw_row_count, big.mark=",")` rows and `r raw_col_count` columns, indicating a huge dataset, making it effective to gain a clear understanding of the data pattern.
+The new dataset comprise `r format(raw_row_count, big.mark=",")` rows and `r raw_col_count` columns. The high number of observations over a 25-year period makes it possible to look for consistent patterns rather than just exceptions.
 
 ## Data Preparation
-The column names have been converted to the data types required for data analysis. The duplicate columns have been removed to ensure the analysis generates accurate outcomes. The removal of the duplicate rows from the dataset has resulted in about 670072 rows in the cleaned dataset. Additional variables, such as profit, Return on Investment (ROI), and revenue success has been created. The rating groups have also been separated during data preparation to facilitate analysis, and only the movies from 2000 to 2024 have been filtered from the dataset. The row containing missing values has not been removed immediately, as that could decrease the entire dataset size significantly. The impossible run time and budget values have been removed from the dataset, making the dataset prepared for analysis.
+Columns were standardized and the columns were transformed into their respective data types (e.g., date-time values, numeric values, Boolean values). Duplicates in the dataset based on the movie id were dropped, resulting in `r format(nrow(movies), big.mark = ",")` observations after cleaning. Other variables that were computed during this step were profit, Return On Investment (ROI), revenue category, and rating category, with filtering done for movies made from 2000-2024. Missing value removal was not performed in this stage because removing them will make the dataset much smaller; instead, the missing values for budget/runtime are corrected to NA because invalid values (negative or zero budget/runtime) can distort our calculations.
 
 ```{r data-quality}
-missing_summary
+knitr::kable(data.frame(Variable = names(missing_summary), Missing_Count = as.integer(missing_summary)), row.names = FALSE, caption = "Missing Values by Column")
 ```
 
 ## Modeling
 ### Global Trends
-The exploration of the basic summary of the prepared dataset shows that the 670072 movies between 2000 and 2024 are present in the dataset. The average rating, revenue, budget and run time are 2.050817, 894739.4, 351558.2 and 68.77461, respectively.
+After merging and cleaning the dataset, a simple statistical description offers a preliminary overview of the data to be analyzed further. The mean rating for 670072 movies produced in the period from 2000 to 2024 is 2.050817, while the mean revenue is 894739.4; the average budget equals 351558.2 and the mean duration is 68.77461.
+
 
 ```{r basic-summary}
 cat("\n===== BASIC SUMMARY =====\n")
@@ -87,7 +86,7 @@ cat("Average budget:", mean(movies$budget, na.rm = TRUE), "\n")
 cat("Average runtime:", mean(movies$runtime, na.rm = TRUE), "\n")
 ```
 
-The top 10 movies in terms of revenue, release year, profit, budget and others have been explored in the form of tables first, and the exploratory plots have also been created to identify the patterns.
+To identify broad patterns before narrowing the focus in Cycle 2, the top-performing movies by revenue and rating were tabulated below, alongside yearly release counts and average revenue, with the corresponding trends examined in the plots that follow.
 
 ```{r summary-tables}
 knitr::kable(top_revenue_movies, caption = "Top 10 Revenue Generating Movies")
@@ -96,13 +95,14 @@ knitr::kable(movies_per_year, caption = "Count of Movies Per Year")
 knitr::kable(avg_revenue_per_year, caption = "Average Revenue Per Year")
 ```
 
-The first plot shows that the number of movies released per year has increased from the year 2000 onwards, with a slight decrease in 2020, which may be due to the pandemic situation. However, the movie count has been found to decrease significantly till 2024 despite recovering after 2020.
+The number of movies produced every year increased gradually from 9,066 in the year 2000 to reach its highest point of 47,190 in the year 2023, followed by a decrease to 35,618 movies in 2024. A slight decrease can be observed in the year 2020 (41,658 movies compared to 46,518 in 2019). This might be due to a decline in the production and release of movies in the year 2020 due to the pandemic outbreak of COVID-19, as it recovered by the year 2021-2023. The steep fall after 2023 is much more than the fall observed in 2020.
 
 ```{r plot-movies-per-year, out.width="70%"}
 knitr::include_graphics("../graphs/01_movies_per_year.png")
 ```
 
-The average rating has been found to consistently fall from 2000 onwards, indicating the gradual decrease in the quality of movies. This means the improvements in terms of developing stories and presentation of movies more relatable to audiences are required to achieve high ratings and movie success.
+Average movie rating has dropped from 2.47 in the year 2000 to 0.50 in the year 2024, with the largest drop recorded after the year 2020 (from 2.15 in 2020 to 1.18 in 2023, and further down to 0.50 in 2024). Nevertheless, it would be better to interpret the above finding cautiously and not take it as direct evidence of declining movie quality. According to the Movies by Rating Group graph presented below, most of the movies in the dataset belong to the Low Rated group, and the TMDb's bulk data contains numerous low engagement or incomplete entries – some of which definitely indicate data quality problems rather than the release of new movies (see Study Limitations). Thus, the above mentioned decline in average ratings may indicate a growing share of these low-quality data among the more recent data.
+
 
 ```{r rating-table}
 knitr::kable(avg_rating_per_year, caption = "Average Ratings Per Year")
@@ -116,33 +116,34 @@ knitr::include_graphics("../graphs/02_rating_per_year.png")
 knitr::include_graphics("../graphs/03_rating_group.png")
 ```
 
-The low rated movies are greater in number compared to the moderate and high rated movies.
+In line with the above trend, low-rated films greatly outweigh films that are of medium and high ratings, collectively making up about three-quarters of the entire dataset. This provides additional evidence that the decrease in the average rating with time is an indication of an increasing proportion of low-engagement and low-quality films.
 
-The average revenue per year has been found to fluctuate throughout from 2000 to 2024, indicating fluctuating audience satisfaction. In this case also, a significant decrease in revenue has been noticed during 2020, which then recovered; however, the pattern clearly indicates a tendency to decrease in revenue every year.
 
 ```{r plot-revenue-per-year, out.width="70%"}
 knitr::include_graphics("../graphs/04_revenue_per_year.png")
 ```
 
-The budget versus revenue plot shows that the budget has a strong positive connection with the revenue generated by a movie. It means investing in a movie to enhance its features results in a positive impact on the audience, leading to an increase in revenue generated by the movie. However, some exceptions are noticed in the plot, indicating that high-budget movies may not always result in the generation of high revenue.
+The average annual revenues went up from 1,421,973 in 2000 to 1,575,081 in 2002 and then fell steadily to 759,690 in 2019. There was a sudden fall in 2020 to 215,126, which can be attributed to the pandemic-driven closure of movie theatres, after which there was a slight bounce back in 2023 to 574,137 and then another fall to 435,081 in 2024.
+
+On the whole, the long-run trend throughout the entire period depicts falling average revenue, in line with the trend witnessed in the ratings presented above.
 
 ```{r plot-budget-revenue, out.width="70%"}
 knitr::include_graphics("../graphs/05_budget_vs_revenue.png")
 ```
 
-The top 10 genres of movies have been explored in terms of the number of movies released in each genre. This shows that drama, documentary, and comedy are the top genres of movies among the existing ones. It means most of the stories in recent times are built on this genre, which may indicate that the current demand of the audience highly belongs to this genre. However, the connection between the top genres and the revenue or ratings needs to be explored further to comprehend the satisfaction of audiences with the genre.
+Drama, Documentary, and Comedy are the three most common genres by movie count, together accounting for a substantial share of all releases in the dataset. This indicates that recent film production continues to concentrate heavily on these established genres. Whether this high production volume translates into stronger commercial or critical performance is examined further in Cycle 2.
 
 ```{r plot-runtime, out.width="70%"}
 knitr::include_graphics("../graphs/06_runtime_distribution.png")
 ```
 
-The run time of most of the movies has been found to be very less, indicating the movies are mostly filled with limited and specific content only.
+Most films have their duration distributed around a region between approximately 80 and 120 minutes, reflecting feature films' durations. Some films are much longer than this interval and constitute the tail of longer durations.
 
 ```{r plot-top-genres, out.width="70%"}
 knitr::include_graphics("../graphs/07_top_genres.png")
 ```
 
-The matrix shows that revenue and profit share a significant positive connection, indicating that an increase in revenue results in increased profit, which is natural. Similarly, vote count has been found to be strongly positively related to revenue, budget and profit, indicating that more widely-watched movies tend to generate more revenue and profit; however, vote count reflects audience volume rather than audience approval, and vote_average (the actual rating) shows only a weak correlation with these factors. The popularity has been found to be slightly connected to the vote count and revenue of movies, which means the popular movies often generate more revenue as a huge audience visits to experience the movie. However, the connection is negligible, indicating that high ratings do not ensure high revenue.
+The correlation between revenue and profit is extremely high (0.97), which is understandable because profit is calculated from revenue. The correlation between the number of votes and revenue is also quite high (0.73), as well as the number of votes and the budget of the movie (0.64). However, this refers to the number of people who saw or voted for the movie, and not to how good the movie was because the correlation between the average value of the rating (vote_average), on the one hand, and revenue (0.06), budget (0.08) and profit (0.05), on the other hand, is extremely low. This means that the success and popularity of the movie are largely independent of its reception: a high rating does not necessarily lead to a high revenue and vice versa. Popularity is positively correlated with revenue (0.22) and the number of votes (0.23).
 
 ```{r correlation, fig.width=5, fig.height=3}
 knitr::kable(cor_matrix, caption = "Correlation Matrix")
@@ -152,15 +153,15 @@ corrplot::corrplot(cor_matrix, method = "color", type = "upper", tl.cex = 0.8)
 ## Evaluation - Cycle 1
 ### Key Findings
 
-Increase in number of movies released per year.
+- Number of movies released per year increasing.
 
-Decrease in average ratings of movies per year.
+- Average rating of movies per year decreasing.
 
-Fluctuating average revenue per year with tendency to decrease consistently.
+- Average revenue fluctuating per year but tending to decrease steadily.
 
-Budget strongly connected to revenue.
+- Budget has a strong relationship with revenue.
 
-High ratings do not confirm high revenue.
+- High ratings do not imply high revenue.
 
 ### Link to Success Criteria
 
