@@ -15,22 +15,20 @@ source("src/Analysis_function.R")
 source("src/Cycle1_Analysis.R")
 source("src/Cycle2_Analysis.R")
 source("src/Summary_Analysis.R")
-knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.align = "center")
 ```
 
 # Introduction
 ## Context
-The global flim industry generates substantial revenue through cinema releases and streaming platforms, and understanding what drivers a film's success have real commercial value for studios, streaming platforms, and investors alike. This report analyses a dataset of movies released between 2000 and 2024, sourced from the Movie Database(TMBDb),to explore the factors associated with commercial and critical success. The analysis follows the CRISP-DM (Cross-Industry Standard Process for Data Mining) methodology, structured across two iterative cycles (Bemthuis et al., 2025). The first cycle examines broad, gloabl trends across the full dataset - release volume, ratings, revenue, and budget over time. The second cycle builds on these findings with a more focused investigation into how genre and language relate to film's commercial and critical performance.
+The global movie industry earns quite a significant amount of money through movies being watched at theaters or streamed online. It is therefore important for us to know what makes a movie successful. This report will make use of TMDb movies data between the years 2000 and 2024 to analyze factors influencing a movie’s success using the CRISP-DM framework in two cycles (Bemthuis et al., 2025).
 
 ## Research Objectives
 First Cycle
-
 - To identify overall patterns in movie release volume, ratings, and revenue between 2000 and 2024.
 - To examine the relationship between a movie's budget and the revenue it generates
 - To identify which movies achieved the highest revenue and the highest ratings, and to understand which features     are most associated with movie success
 
 Second Cycle
-
 - To examine how a movie's genre relates to its ratings and commercial success
 - To examine how a movie's orginal language relates to its ratings and commercial success
 
@@ -47,14 +45,13 @@ This analysis is framed for a **streaming platform content-acquisition team**, r
 This analysis would be deemed a success if the following three factors were achieved: (1) identification of consistent patterns in the relationship between budget, genre, release timing, and both rating and revenue; (2) determining whether high ratings consistently correlate with high revenue or whether the two are relatively independent of each other; and (3) practical advice based on the data analysis for the stakeholder.
 
 ## Research Questions
-
 - What are the key patterns of the success factors of movies in the dataset used?
 - How is the movie budget connected to the movie revenue in the film industry?
 - What type of changes have the movies experienced over time in terms of release, revenue and rating patterns?
 - Which movies have received the highest ratings and have generated the highest revenue?
 
 ## Data Understanding
-The dataset comprises 25 years of CSV files, one for each year from 2000 to 2024, having common columns like id, title, genres, release date, budget, revenue, vote average, vote count, and original language. These 25 years of datasets have been merged together in one single file for analysis. The reason for selecting these specific features is that they reflect answers to the stakeholder’s main concerns: budget, revenue, and profit relate to the commercial success, while vote average and vote count refer to critical and audience reception, respectively. Release date, genres, and original language help in analyzing success with the passage of time and according to the content type.
+The dataset comprises 25 years’ worth of yearly CSV files (from 2000-2024), containing the same set of features like id, title, genre, release year, budget, revenue, and votes. The datasets have been combined row-wise into one single file. These features have been selected since they are relevant to the requirements of the stakeholder: budget, revenue, profit, votes, genre, and release year.
 
 ```{r data-understanding}
 cat("Number of rows:", raw_row_count, "\n")
@@ -65,7 +62,7 @@ knitr::kable(head(movies_raw[, c("id", "title", "vote_average", "vote_count", "r
 The new dataset comprise `r format(raw_row_count, big.mark=",")` rows and `r raw_col_count` columns. The high number of observations over a 25-year period makes it possible to look for consistent patterns rather than just exceptions.
 
 ## Data Preparation
-Columns were standardized and the columns were transformed into their respective data types (e.g., date-time values, numeric values, Boolean values). Duplicates in the dataset based on the movie id were dropped, resulting in `r format(nrow(movies), big.mark = ",")` observations after cleaning. Other variables that were computed during this step were profit, Return On Investment (ROI), revenue category, and rating category, with filtering done for movies made from 2000-2024. Missing value removal was not performed in this stage because removing them will make the dataset much smaller; instead, the missing values for budget/runtime are corrected to NA because invalid values (negative or zero budget/runtime) can distort our calculations.
+Column names were standardised and columns were cast into proper data types. Duplicates based on movie id were deleted and now there are `r format(nrow(movies), big.mark=",")` number of rows in the movies data frame. Variables related to profit, roi, revenue-success, and rating-group were created and movies data frame was subsetted to only include the years 2000 to 2024. Inconsistent entries were replaced by NA instead of being deleted.
 
 ```{r data-quality}
 knitr::kable(data.frame(Variable = names(missing_summary), Missing_Count = as.integer(missing_summary)), row.names = FALSE, caption = "Missing Values by Column")
@@ -74,7 +71,6 @@ knitr::kable(data.frame(Variable = names(missing_summary), Missing_Count = as.in
 ## Modeling
 ### Global Trends
 After merging and cleaning the dataset, a simple statistical description offers a preliminary overview of the data to be analyzed further. The mean rating for 670072 movies produced in the period from 2000 to 2024 is 2.050817, while the mean revenue is 894739.4; the average budget equals 351558.2 and the mean duration is 68.77461.
-
 
 ```{r basic-summary}
 cat("\n===== BASIC SUMMARY =====\n")
@@ -152,15 +148,14 @@ corrplot::corrplot(cor_matrix, method = "color", type = "upper", tl.cex = 0.8)
 
 ## Evaluation - Cycle 1
 ### Key Findings
-- Number of movie releases increased from 9,066 in 2000 to a maximum of 47,190 in 2023 and then to 35,618 in 2024.
-- Average rating declined from 2.47 in 2000 to 0.50 in 2024; however, this trend may be due to an increasing number   of lower-quality movies that received lower ratings.
-- Annual average income varies throughout the period but demonstrates a negative trend, with a significant decline    after 2019 and partial recovery afterwards.
-- Budget and income are highly correlated (0.72), meaning that the movies with higher budget are also generating      higher incomes.
-- The vote count is highly correlated with income and budget while vote_average is poorly correlated with both of     these factors – high rating does not mean high income.
+- The number of releases increased from 9,066 (2000) to 47,190 (2023), but then decreased to 35,618 (2024).
+- The average rating went down from 2.47 to 0.50 due to an increase in low-quality films.
+- The average revenues have dropped throughout the years, especially since 2019.
+- The budget and revenue show high correlation (0.72).
+- The vote count is correlated with both revenue and budget, while the rating is not.
 
 ### Link to Success Criteria
-
-These findings bear immediate relevance to the success criteria established in the Business Understanding. It was discovered that there is a stable and clear pattern between budget and revenue (correlation of 0.72), thus meeting the first success criterion. It was also made evident what the relationship between rating and revenue is – the lack of any significant correlation, meaning that they can be considered separate indicators of success, thus satisfying the second success criterion. However, in order to give some specific recommendations regarding acquisitions, further analysis should be conducted (Cycle 2).
+This data is directly linked to the success criteria where the budget and revenue relationship was determined to be (0.72 correlation), while the ratings-revenue relationship was confirmed as being negligible, thus making it independent from each other. This is the first step towards acquisition decisions, but more detailed information will be provided in Cycle 2.
 
 ### Limitations
 - There is low correlation among the vast majority of individual factors (except for budget and revenue) and the      success of the movies, meaning that there are fewer conclusions that can be made on the basis of Cycle 1.
@@ -172,35 +167,30 @@ These findings bear immediate relevance to the success criteria established in t
 
 # Second CRISP-DM Cycle
 ## Refined Business Understanding
-Based on the overall data analysis and findings received from the first CRISP-DM Cycle, it has been understood that most of the mentioned factors are interconnected to each other moderately. In this regard, the study intends to understand specifically, the connection between genre and revenue of movies in detail in the second CRISP-DM Cycle. This cycle also intends the way language influence the revenue of movies.
+In Cycle 1, budget was found to be an important determinant of revenue generation; however, ratings were not found to be so. In this cycle, two additional variables that emerge from the findings in Cycle 1 and stakeholders' interest have been studied: genre and language.
 
-Research Questions
-
-What is the best movie genre in the dataset based on the revenue and rating factors?
-
-How does the movie language influence the success of movies?
+## Research Questions
+- What movie genre is known to have high average revenue and ratings?
+- How does the original language of a movie affect its revenue and ratings?
 
 ## Enhanced Data Preparation
-The data has been prepared for this section by selecting only the required columns from the dataset, such as revenue, genres, title, vote average, and id. The rows containing missing values in the genre columns have been removed from the dataset. The separate rows have been created based on separate genres to analyse the impact of individual genres on movie success. The columns have been created called average rating, average revenue and movie count, calculating their values from the dataset. The numerical columns have been sorted in decreasing order to identify the best genre.
+The dataset was limited to include id, title, genres, original_language, vote_average, and revenue. Missing data in the genre was dropped. As a movie can belong to many genres, each movie-genre combination was expanded to one line per genre in order for it to make its own contribution to the calculation of the average per genre separately.
 
 ## Advanced Modeling and Final Evaluation
 ### Influence of Genre on Movie Success
-
-The exploration of the table comparing different genres in terms of revenue, ratings and others reveals that adventure is the best genre among the existing genres as it has contributed to the highest average revenue and average ratings. However, the highest movie count has been noticed in the drama genre, indicating that the emphasis on drama genre for movie development is one of the significant causes of deteriorating ratings and revenue from 2000 to 2024 in the film industry. Hence, the film producers need to emphasise creating adventure movies to gain high ratings, revenue and movie success.
+Adventure performs on both average earnings and ranking (second behind the small TV Movie subcategory). Drama has the largest number of movies, but is not a leader on either performance metric, indicating a possible overabundance compared to its value – meaning that Adventure-type films could yield better results..
 
 ```{r plot-genre-revenue, out.width="70%"}
 knitr::include_graphics("../graphs/08_genre_revenue.png")
 ```
 
-The revenue and ratings may be considered the most important factors to estimate movie success, as high ratings by audiences can gradually attract more audiences to visit the hall to watch a movie. Revenue, being strongly connected to audience count, also depends on ratings, as the more the ratings the more the crowd of audience, indicating that ratings are the prime factor for movie success. Based on revenue, adventure is the genre generating highest revenue per year.
-
-To go beyond revenue alone, the genres have also been ranked by average rating, and the overall spread of Return on Investment (ROI) across all movies has been examined, giving a fuller picture of genre performance and production efficiency.
+Genres were arranged based on revenue and rating because of the different importance of each factor for the content-acquisition team - revenue is important as the return, rating as reception.
 
 ```{r plot-genre-rating, out.width="70%"}
 knitr::include_graphics("../graphs/11_genre_rating.png")
 ```
 
-The distribution of Return on Investment shows that most movies cluster at low-to-moderate ROI, with a long tail of high-ROI outliers, indicating that a small number of movies generate disproportionately large returns relative to their budget.
+Most Movies are distributed around a low to moderate ROI (0-5x), with a long tail past 40x – which implies that even an industry with a high average income might have been due to a few outstanding Movies.
 
 ```{r plot-roi-distribution, out.width="70%"}
 knitr::include_graphics("../graphs/12_roi_distribution.png")
@@ -211,82 +201,60 @@ knitr::include_graphics("../graphs/12_roi_distribution.png")
 knitr::include_graphics("../graphs/09_language_revenue.png")
 ```
 
-The analysis shows that the English language movies, despite generating high revenue and counts, possess limited ratings. On the other hand, the movies in other languages such as Chinese and other languages, despite having lower movie counts than English, have received competitive ratings. This indicates that the complete emphasis on the English language only by production companies may not be an appropriate decision to enhance movie success. It should be noted that this comparison is restricted to the 10 most common languages by movie count, so as to avoid unstable averages from languages with very few titles.
+Between the top 10 languages, it has been found that Chinese and English earn maximum average income, with Chinese earning slightly more than English. This could imply that there are other options for English-only approaches that have been overlooked.
 
 ### Connection between language and ratings
 ```{r plot-language-ratings, out.width="70%"}
 knitr::include_graphics("../graphs/10_language_ratings.png")
 ```
-
-The Italian and French languages has been found to be at the top, indicating that audiences prefer these languages more than other languages.In this regard, developing movies in these languages can help gain huge audience count enhancing the chances of movie success.
+Italian and French rank highest in median ratings among common languages, a pattern distinct from the revenue pattern, demonstrating that there is no necessary link between success as a language and success in terms of money or praise.
 
 ## Evaluation - Cycle 2
 ### Key Findings
-
-Adventure is the genre most strongly associated with both high average revenue and high average ratings.
-
-Drama has the highest movie count but does not lead on revenue or rating, suggesting oversupply relative to audience reward.
-
-English and Chinese language movies generate the highest revenue, but Italian and French language movies achieve the highest average ratings.
-
-Revenue and ratings are not strongly linked - the highest-revenue movies are rarely the highest-rated ones.
+- Adventure performs better than others on average revenue and rating.
+- Drama has the largest number of movies but does not perform well on either of these two criteria, implying surplus in relation to reward.
+- Chinese and English produce the highest average revenue, whereas Italian and French have the highest ratings.
+- There is no significant correlation between revenue and rating – high revenue movies do not necessarily have the highest ratings.
 
 ### Link to Success Criteria
-These findings directly satisfy the success criteria set out in the Business Understanding: a clear pattern has been identified (Adventure genre and non-English languages both associate with stronger audience reception), and the revenue-rating relationship has been clarified as largely independent rather than reliably predictive. This gives the stakeholder a concrete basis for content decisions: prioritising Adventure titles for revenue, while considering multilingual content investment to strengthen ratings.
+These results meet the success criteria: a clear pattern emerged (Adventure and languages other than English both correlate with increased reception), and the correlation between revenue and ratings was shown to be largely independent. This provides a practical approach to decision making regarding content – emphasizing Adventure to generate revenue, and multilingual content for increased ratings.
 
 ### Limitations
-Genre and language are both self-reported, categorical fields in the source data and may not capture nuanced audience segments.
-
-The analysis does not control for confounding factors such as marketing spend or release timing, which likely also influence genre and language performance.
+- "Genre" and "Language" are categorical variables that could misclassify subtle groups within the audience.
+- There is no adjustment made for other variables, such as marketing budget or release date.
 
 ### Next Steps
-Future work could model revenue and rating jointly (e.g. multivariate regression) to isolate the independent effect of genre and language while controlling for budget and release year.
+Future research may consider joint modeling of revenue and rating (such as through regression) in order to tease out the genre and language effects while controlling for the budget and year of release. 
 
-A dedicated success label (rather than deriving it from revenue/rating thresholds) would allow more precise classification-based analysis in a future CRISP-DM cycle.
+Future cycles would benefit from a separate indicator of success, independent of the revenue/rating thresholds.
 
 # Final Evaluation
 ## Major Findings
-
-English and Chinese language movies have mostly generated high revenue.
-
-Adventure genre movies has been found to generate significantly high revenue.
-
-Italian and French language are top-rated languages among others.
-
-Revenue and ratings are not directly connected to each other as the highest revenue movie and top-rated movies are different.
+- Chinese and English language films earn the most money.
+- The genre that earns most money is adventure.
+- Italian and French have the highest ratings among common languages.
+- Rating and revenue are independent – the most revenue and highest rated films are different.
 
 # Implications for Film Production Industry
-Focus on generating movies on multiple languages can help film producers equally gain high ratings and revenue.
-
-The adventure genre has been found to generate highest revenue indicating the film production industry can focus on this genre to enhance profitability.
-
-Developing movies in Italian and French languages can enhances audience count, enhancing revenue.
-
-The emphasis on multiple languages can help create movies in native languages of different people enhancing their understandability resulting in increased audience.
-
-High ratings does not ensure high revenue, indicating that a high quality movie content is a priority along with top-rated language to ensure a successful movie.
+- The diversification to several languages can prove helpful in creating a good balance between the two aspects of earning and rating as well.
+- The selection of Adventure as the genre for making the product would definitely prove helpful in achieving revenue.
+- The use of Italian and French languages can prove helpful in increasing the rating.
+- As high ratings cannot assure high earnings, the importance of quality and language cannot be ignored.
 
 # Study Limitations
-The dataset consists of huge missing values in some of the columns which has been challenging to handle as the removal of those rows might have reduced the data size, imposing negative impact to the data analysis.
-
-The findings of the study has been extracted from a single dataset.
-
-The dataset lacks a separate column specifically designed to label movies as successful and failure. A small number of entries in the raw data (e.g. movies with several billion in reported revenue against a budget of only a few hundred dollars and zero votes) also appear to be data quality issues rather than genuine box-office performance, and should be interpreted with caution where they influence top-revenue rankings.
+- There are many missing values in some columns in the dataset, but the deletion of such observations wasn’t performed in order not to reduce the number of cases, but that is the reason why there are several analyzes conducted on partially incomplete data.
+- The results are drawn from one dataset (TMDb).
+- There’s no specific success variable in the source data – it was derived using the revenue/rating criteria. There are also certain observations with poor data quality characteristics instead of being real movies (unrealistic revenue in contrast with almost zero budgets and votes).
 
 # Conclusions
-Based on the overall analysis in the CRISP-DM Cycles, it can be inferred that the emphasis on creating more movies in the adventure genre is necessary for enhanced profitability and revenue increase in the film industry. The ratings are the most important factor influencing the success of a movie by spreading positive vibes and attracting new audiences to watch the movie. The development of movies with top-rated languages such as Italian, French and others can influence movies success. The film industry can rely on this information to enhance its growth and revenue in future.
+In both CRISP-DM Cycles, budget is revealed to be the most significant determinant of revenues, and ratings have little relationship with commercial success. Adventure is the best-performing genre in both categories, while Italian and French-language movies receive the most successful ratings even though there are fewer of them produced. It seems clear for the content acquisition team that adventure movies should be acquired for maximum revenue generation, while attention to other languages will improve ratings.
 
 # Methodological Notes
-
-The CRISP-DM methodological approach has been executed with two iterative cycles.
-
-The first cycle has focused on exploring global trends.
-
-The second cycle has focused on specific details regarding the connection of movie success with genre, language, and ratings.
-
-The R programming language has been used to execute the entire coding part.
-
-Histogram, bar plots and others have been used to analyse the dataset. All exploratory and modelling visualisations in this report were produced using ggplot2, with a single exception: the correlation matrix visualisation uses the corrplot package, as it produces a purpose-built, directly interpretable colour-coded correlation grid that ggplot2 does not offer natively without substantial additional code.
+- The analysis was performed with the help of the CRISP-DM framework, implemented in two iterative rounds.
+- The project relies on the ProjectTemplate framework for replicability.
+- Round one analyzed global trends for the whole dataset; round two concentrated on genre and language.
+- All data wrangling and analyses were performed in R with the help of dplyr.
+- Visualizations were created with the help of ggplot2, apart from the correlation matrix that uses corrplot.
 
 # References
 Bemthuis, R. H., Govers, R. R., & Asadi, A. (2025). A CRISP-DM-based methodology for assessing agent-based simulation models using process mining [Review of A CRISP-DM-based methodology for assessing agent-based simulation models using process mining]. Journal of Simulation, 1-22. https://doi.org/10.1080/17477778.2025.2508245
