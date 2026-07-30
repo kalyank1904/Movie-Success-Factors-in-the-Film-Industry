@@ -1,5 +1,5 @@
 ---
-title: " Movie Success Factors in the Flim Industry (2000-2024): A CRISP-DM Analysis of Budget, Revenue, Genre, and Language"
+title: " Movie Success Factors in the Film Industry (2000-2024): A CRISP-DM Analysis of Budget, Revenue, Genre, and Language"
 output:
   pdf_document: default
   word_document: default
@@ -37,11 +37,11 @@ Second Cycle
 
 # First CRISP-DM Cycle
 ## Business Understanding
-Rising production costs and tighter budgest have made financial sustainability an ongoing challenge for the film industry.Understanding how budget relates to a film's eventual success is therefore a key business question. Thos cycle focuses on that business context from the perspective of a specific stakeholder, breaking the overall question down into the sub-questions addressed below.
+Rising production costs and tighter budgets have made financial sustainability an ongoing challenge for the film industry.Understanding how budget relates to a film's eventual success is therefore a key business question. This cycle focuses on that business context from the perspective of a specific stakeholder, breaking the overall question down into the sub-questions addressed below.
 
 
 ### Stakeholder
-This analysis is framed for a **streaming platform content-acquisition team**, responsible for deciding which types of films to license, promote, or commission This stakeholder needs to understand which factors reliably predict commercial success (revenue) and critical/audience reception (rating), so that acquisition and production-partnership decisions can be prioritized accordingly. 
+This analysis is framed for a **streaming platform content-acquisition team**, responsible for deciding which types of films to license, promote, or commission. This stakeholder needs to understand which factors reliably predict commercial success (revenue) and critical/audience reception (rating), so that acquisition and production-partnership decisions can be prioritized accordingly. 
 
 ### Success Criteria
 This analysis would be deemed a success if the following three factors were achieved: (1) identification of consistent patterns in the relationship between budget, genre, release timing, and both rating and revenue; (2) determining whether high ratings consistently correlate with high revenue or whether the two are relatively independent of each other; and (3) practical advice based on the data analysis for the stakeholder.
