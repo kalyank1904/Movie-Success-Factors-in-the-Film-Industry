@@ -1,5 +1,5 @@
 ---
-title: "Movie Success Factors in the Film Industry (2000-2024): A CRISP-DM Analysis of Budget, Revenue, Genre, and Language"
+title: " Movie Success Factors in the Flim Industry (2000-2024): A CRISP-DM Analysis of Budget, Revenue, Genre, and Language"
 output:
   pdf_document: default
   word_document: default
@@ -24,11 +24,13 @@ The global movie industry earns quite a significant amount of money through movi
 
 ## Research Objectives
 First Cycle
+
 - To identify overall patterns in movie release volume, ratings, and revenue between 2000 and 2024.
 - To examine the relationship between a movie's budget and the revenue it generates
 - To identify which movies achieved the highest revenue and the highest ratings, and to understand which features     are most associated with movie success
 
 Second Cycle
+
 - To examine how a movie's genre relates to its ratings and commercial success
 - To examine how a movie's orginal language relates to its ratings and commercial success
 

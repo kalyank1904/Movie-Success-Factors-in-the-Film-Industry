@@ -3,7 +3,7 @@
 # File: src/cycle2_interesting_insights.R
 # ============================================
 
-# ----- Influence of Genre on Movie Success -----
+# ----- Influence of Genre On Movies Success -----
 genre_revenue <- movies %>%
   select(id, title, revenue, vote_average, genres) %>%
   filter(!is.na(genres), genres != "") %>%
@@ -25,7 +25,7 @@ p_genre_revenue <- ggplot(genre_plot, aes(x = reorder(genres, avg_revenue), y = 
   labs(title = "Top 10 Genres by Average Revenue", x = "Genre", y = "Average Revenue") +
   theme_minimal()
 
-# ----- Influence of Language on Movie Success -----
+# ----- Influence of language on Movie Sucess -----
 language_success <- movies %>%
   group_by(original_language) %>%
   summarise(
@@ -57,7 +57,7 @@ p_language_ratings <- movies %>%
   labs(title = "Distribution of Movie Ratings by Language", x = "Language", y = "Movie Rating") +
   theme_minimal()
 
-# -----Top Genres by Average Rating -----
+# ----- Top Genres By Average Rating -----
 genre_rating_plot <- genre_revenue %>%
   arrange(desc(avg_rating)) %>%
   slice_head(n = 10)
@@ -69,7 +69,7 @@ p_genre_rating <- ggplot(genre_rating_plot, aes(x = reorder(genres, avg_rating),
   labs(title = "Top 10 Genres by Average Rating", x = "Genre", y = "Average Rating") +
   theme_minimal()
 
-# ----- Genre ROI Efficiency -----
+# ----- Genre ROT Efficiency -----
 genre_roi <- movies %>%
   select(id, genres, budget, revenue, roi) %>%
   filter(!is.na(genres), genres != "", !is.na(roi), budget > 0) %>%

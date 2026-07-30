@@ -29,7 +29,7 @@ avg_revenue_per_year <- movies %>%
   summarise(avg_revenue = mean(revenue, na.rm = TRUE), total_movies = n()) %>%
   ungroup()
 
-# ----- Average Rating Per Year -----
+# -----Average Rating Per Year -----
 avg_rating_per_year <- movies %>%
   group_by(release_year) %>%
   summarise(avg_rating = mean(vote_average, na.rm = TRUE), n_movies = n()) %>%
@@ -62,7 +62,7 @@ p2 <- ggplot(avg_rating_per_year, aes(x = release_year, y = avg_rating)) +
   labs(title = "Average Movie Rating Per Year", x = "Release Year", y = "Average Vote Average") +
   theme_minimal()
 
-# ----- Plot: Movies by Rating Group -----
+# ----- Plot: Movies By Rating Group   -----
 rating_group_summary <- movies %>% count(rating_group)
 
 p_ratinggroup <- ggplot(rating_group_summary, aes(x = rating_group, y = n)) +
@@ -86,7 +86,7 @@ p5 <- ggplot(movies %>% filter(!is.na(budget), !is.na(revenue), budget > 0, reve
   labs(title = "Budget vs Revenue (log scale)", x = "Budget (log scale)", y = "Revenue (log scale)") +
   theme_minimal()
 
-# ----- Plot: Distribution of Movie Runtime -----
+# ----- Plot:Distribution of Movie Runtime -----
 p_runtime <- ggplot(movies %>% filter(runtime >= 30, runtime <= 300), aes(x = runtime)) +
   geom_histogram(bins = 30) +
   labs(title = "Distribution of Movie Runtime", x = "Runtime (minutes)", y = "Number of Movies") +
@@ -99,7 +99,7 @@ p6 <- ggplot(top_genres, aes(x = reorder(genres, n), y = n)) +
   labs(title = "Top 10 Genres", x = "Genre", y = "Number of Movies") +
   theme_minimal()
 
-# ----- Correlation Matrix -----
+# ----- Correlation Matrix  -----
 numeric_data <- movies %>%
   select(vote_average, vote_count, revenue, runtime, budget, popularity, profit, roi)
 

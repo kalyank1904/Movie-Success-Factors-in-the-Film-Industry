@@ -1,5 +1,5 @@
 # ============================================
-# SUMMARY ANALYSIS
+# Summary Analysis
 # ============================================
 key_findings <- list(
   cycle1 = list(

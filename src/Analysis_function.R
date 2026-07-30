@@ -3,7 +3,6 @@
 # File: src/analysis_functions.R
 # ============================================
 
-
 # ----- Function 1: Top N Table -----
 
 get_top_n <- function(data, sort_column, n = 10) {
